@@ -1,0 +1,58 @@
+Infra Automation with Terraform + Ansible + Docker App
+
+Project Goal
+  Use Terraform to provision infra:
+
+      - 2 EC2 instances inside a custom VPC
+      - A security group allowing SSH (22), HTTP (80)
+      - An Application Load Balancer (ALB) that balances traffic between the 2 EC2s
+
+
+  Use Ansible to: 
+
+      - Install Docker on both EC2s
+      - Deploy a sample Flask Docker app
+
+
+Architecture :
+
+               +---------------------+
+               |   AWS Load Balancer |
+               +----------+----------+
+                          |
+                 -----------------
+                 |               |
+         +-------+-------+ +-----+-------+
+         |   EC2 Instance | | EC2 Instance |
+         |   (Docker)     | |   (Docker)   |
+         |  Flask App     | |  Flask App   |
+         +---------------+ +---------------+
+
+
+Folder structure :
+
+infra-project/
+  ├── terraform/
+  │   ├── main.tf
+  │   ├── variables.tf
+  │   └── outputs.tf
+  └── ansible/
+      ├── inventory.ini
+      └── playbook.yml
+      └── flask-app/
+          ├── app.py
+          └── Dockerfile
+
+
+✅ Final Outcome
+
+    Terraform provisions:
+          VPC, subnet, security groups
+          2 EC2 instances + Application Load Balancer
+
+    Ansible configures:
+
+         Docker installed on both servers
+         Flask app deployed in Docker containers
+
+    Visiting ALB DNS name → serves the Flask app, load-balanced between 2 EC2s

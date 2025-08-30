@@ -1,0 +1,23 @@
+---
+- hosts: web
+  become: true
+  tasks:
+    - name: Update APT
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Copy Flask app
+      copy:
+        src: ./flask-app/
+        dest: /home/ubuntu/flask-app/
+
+    - name: Build Docker image
+      command: docker build -t flask-app /home/ubuntu/flask-app/
+
+    - name: Run Flask container
+      command: docker run -d -p 80:5000 flask-app
