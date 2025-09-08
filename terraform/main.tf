@@ -71,7 +71,7 @@ resource "aws_instance" "devops_servers" {
     instance_type = "t2.micro"
     subnet_id     = aws_subnet.devops_subnet.id
     vpc_security_group_ids = [aws_security_group.devops_sg.id]
-    key_name      = "my-key" # Replace with your AWS key pair
+    key_name      = "Monkey" # Replace with your AWS key pair
 
     tags = {
         Name = ""
